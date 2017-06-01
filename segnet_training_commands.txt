@@ -1,0 +1,12 @@
+# SEGNET
+# cd to segnet tutorial folder
+cd /home/bloisi/work_space/caffe_seg/SegNet-Tutorial
+
+# start training segnet
+./caffe-segnet-cudnn5/build/tools/caffe train -gpu 0 -solver /home/bloisi/water_detection/Models/segnet_basic_solver_water.prototxt
+
+# compute bn statistics
+python Scripts/compute_bn_statistics.py /home/bloisi/water_detection/Models/segnet_basic_train_water.prototxt /home/bloisi/water_detection/snapshots/training/segnet_basic_medical_iter_100.caffemodel /home/bloisi/water_detection/snapshots/inference/
+
+# test the model
+python Scripts/test_segmentation_camvid.py --model /home/bloisi/water_detection/Models/segnet_basic_inference_water.prototxt --weights /home/bloisi/water_detection/snapshots/inference/test_weights.caffemodel --iter 233
